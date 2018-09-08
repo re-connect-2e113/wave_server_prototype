@@ -9,3 +9,9 @@
   ポート番号(WEBサーバー)
 - RABBITMQ_URL
   RabbitMQのURL(ジョブキュー)
+- VAPID_PUBLIC_KEY
+  PUSHサーバー公開鍵、Waveクライアントでも使用
+- VAPID_PRIVATE_KEY
+  PUSHサーバー秘密鍵
+- WAVE_ICON_URL
+  Waveのアイコンとして使う画像のURLを指定(通知で表示)
