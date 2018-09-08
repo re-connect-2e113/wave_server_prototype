@@ -1,9 +1,10 @@
+require('dotenv').config()
 const amqplib = require('amqplib');
 const webPush = require('web-push');
 
 const RABBITMQ_URL = process.env.RABBITMQ_URL || 'apqp://guest:guest@localhost:5672';
 const ISSUER = process.env.ISSUER;
-const VAPID_PUBLIC_KEY = process.env.VAPID_PUBKEY;
+const VAPID_PUBLIC_KEY = process.env.VAPID_PUBLIC_KEY;
 const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY;
 const WAVE_ICON_URL = process.env.WAVE_ICON_URL;
 
