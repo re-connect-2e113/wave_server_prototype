@@ -33,9 +33,12 @@ app.post('/messages', async (req, res) => {
   const connection = await open;
   const channel = await connection.createChannel();
   const queue = channel.assertQueue('wave-messages');
-  channel.sendToQueue('wave-messages', new Buffer(JSON.stringify(req.body)));
-  console.log(req.body);
-  res.send('ok');
+  // ここで受け手気にするのもおかしい話だけど今はここで情報持ってるので仕方なし
+  // 受け手が先にPush登録している前提
+  const payload = { ...payload, ...pushRecipientConfigs[0] };
+  console.log(payload);
+  channel.sendToQueue('wave-messages', new Buffer(JSON.stringify(payload)));
+  res.status(201).json(payload);
 });
 
 
