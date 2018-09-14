@@ -14,7 +14,7 @@ webPush.setVapidDetails(ISSUER, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
 
 open.then(async (connection) => {
   const channel = await connection.createChannel();
-  const qAssert = await channel.assertQueue('wave-messages');
+  const qAssert = await channel.assertQueue('wave-messages-to-you');
 
   // メッセージがブローカーから渡されるたび実行
   channel.consume(qAssert.queue, (message) => {

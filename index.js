@@ -33,13 +33,18 @@ app.options('*', (req, res) => {
 app.post('/messages', async (req, res) => {
   const connection = await open;
   const channel = await connection.createChannel();
-  const queue = channel.assertQueue('wave-messages');
-  // ここで受け手気にするのもおかしい話だけど今はここで情報持ってるので仕方なし
-  // 受け手が先にPush登録している前提
-  const payload = { ...req.body, ...pushRecipientConfigs[0] };
-  console.log(payload);
-  channel.sendToQueue('wave-messages', new Buffer(JSON.stringify(payload)));
-  res.status(201).json(payload);
+
+  if (req.body.recipient !== 'YOU') {
+    const queue = channel.assertQueue('wave-messages-to-her');
+    channel.sendToQueue('wave-messages-to-her', new Buffer(JSON.stringify(req.body)));
+  } else {
+    const queue = channel.assertQueue('wave-messages-to-you');
+    // ここで受け手気にするのもおかしい話だけど今はここで情報持ってるので仕方なし
+    // 受け手が先にPush登録している前提
+    const payload = { ...req.body, ...pushRecipientConfigs[0] };
+    channel.sendToQueue('wave-messages-to-you', new Buffer(JSON.stringify(payload)));
+  }
+  res.status(201).json(req.body);
 });
 
 
